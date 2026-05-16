@@ -1,13 +1,127 @@
-This project, titled Weather Prediction Using RNN, presents a simple yet effective deep learning approach for forecasting daily maximum temperature based on historical weather data. It demonstrates the power of Recurrent Neural Networks (RNNs) in modeling temporal dependencies within time-series data, offering a clear and reproducible implementation suitable for both educational and research purposes. The notebook provides a structured workflow encompassing data preparation, model development, training, validation, and visualization, all within a compact and well-documented environment.
 
-The main objective of this project is to capture sequential patterns in temperature variation and use them to predict future values of temp_max. Weather forecasting is a highly dynamic and nonlinear task influenced by numerous interdependent variables, making it an ideal domain for exploring sequence-based neural models. The RNN architecture used here is intentionally kept simple to emphasize conceptual clarity rather than architectural complexity. Despite its simplicity, the model effectively demonstrates how past temperature data can be leveraged to forecast upcoming temperature trends with reasonable accuracy.
+# 🌦️ Weather Forecasting using LSTM (RNN)
 
-The workflow begins with data preprocessing, where the raw dataset containing temperature records is normalized and transformed into fixed-length input sequences defined by a window size parameter (WINDOW). Each input window is associated with the next time step’s temperature value as the prediction target. The dataset is then divided into training, validation, and test sets to assess the model’s generalization ability. This design ensures that the model learns from past data while being evaluated on unseen future samples, closely simulating real-world forecasting conditions.
+This project implements a **Recurrent Neural Network (LSTM)** to perform **time-series forecasting of daily maximum temperature** using historical weather data from Kaggle.
 
-The model architecture consists of a single RNN layer followed by a dense output layer for regression. The RNN is trained using the Mean Squared Error (MSE) loss function and the Adam optimizer, chosen for its adaptive learning rate and robust convergence properties. During training, the model continuously updates its weights to minimize prediction errors, gradually learning temporal dependencies between temperature sequences. Once trained, predictions are generated for all three phases—training, validation, and testing—and concatenated for unified visualization and evaluation.
+---
 
-Visualization plays a key role in this project, enabling a clear comparison between predicted and actual temperature values. Using Matplotlib and Seaborn, the results are plotted with aesthetically pleasing color palettes such as “Spectral” and “Flare.” These plots allow users to visually assess how closely the model’s forecasts follow the actual temperature trends over time. The notebook includes high-resolution figures that highlight both the general performance and localized fluctuations, helping to identify periods of over- or under-prediction.
+## 📌 Project Overview
 
-The notebook also integrates seamlessly with Google Colab, enabling easy execution without complex local setup. Users can mount their Google Drive to load data and save model outputs persistently. Essential dependencies include numpy, pandas, matplotlib, seaborn, and tensorflow, ensuring a lightweight and accessible environment for experimentation.
+The goal of this project is to predict the next-day maximum temperature based on the previous 10 days of weather data. A deep learning approach using **LSTM (Long Short-Term Memory)** networks is applied to capture temporal dependencies in the dataset.
 
-Although the model performs well for its simplicity, several potential extensions can further enhance its accuracy and robustness. Future improvements could involve replacing the RNN with LSTM or GRU layers to better capture long-term dependencies, incorporating additional meteorological features such as humidity and wind speed, applying hyperparameter optimization, or integrating attention mechanisms. Overall, this project serves as a strong foundation for researchers and practitioners seeking to understand the fundamentals of deep learning-based weather forecasting, combining clarity, functionality, and extendibility within a concise and practical framework.
+---
+
+## 📊 Dataset
+
+* Source: Kaggle Weather Dataset (Shayan Rokhva)
+* Total samples: **1,461 days**
+* Features:
+
+  * Date
+  * Precipitation
+  * Temp_max (target)
+  * Temp_min
+  * Wind
+  * Weather condition
+
+Only **temp_max** is used for time-series forecasting in this project.
+
+---
+
+## ⚙️ Data Preparation
+
+* Converted time-series data into supervised learning format using a sliding window
+* Window size: **10 days**
+* Created sequences:
+
+  * Input (X): previous 10 days of temperature
+  * Output (y): next day temperature
+* Split:
+
+  * Training: first 800 samples
+  * Validation: next 200 samples
+  * Test: remaining samples
+
+---
+
+## 🧠 Model Architecture
+
+The model is built using **Keras Sequential API**:
+
+* 4 × LSTM layers (50 units each)
+* Dropout (0.2) after each LSTM layer
+* Fully connected Dense output layer (1 neuron)
+* Optimizer: Adam
+* Loss function: Mean Squared Error (MSE)
+
+---
+
+## 📈 Training
+
+* Epochs: **200**
+* Batch size: 64
+* Loss monitored on training and validation sets
+
+Final validation loss achieved: **~9.6 MSE**
+
+---
+
+## 📉 Results & Visualization
+
+The model predictions were compared with actual values:
+
+* Training performance improved steadily
+* Validation loss stabilized around ~9–10
+* Predictions closely follow real temperature trends
+
+Plots include:
+
+* Training vs Validation Loss curve
+* Actual vs Predicted temperature (Validation & Test sets)
+
+---
+
+## 🛠️ Technologies Used
+
+* Python 🐍
+* NumPy & Pandas
+* Matplotlib & Seaborn
+* TensorFlow / Keras
+* Google Colab
+
+---
+
+## 🚀 How to Run
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/your-username/weather-lstm.git
+```
+
+2. Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+3. Run the notebook:
+
+```bash
+jupyter notebook weather_lstm.ipynb
+```
+
+---
+
+## 📌 Key Insight
+
+LSTM networks are effective for capturing sequential patterns in weather data, and even a simple univariate setup can produce stable forecasting performance over time-series datasets.
+
+---
+
+# ReadMe is generated by GPT. Check the important info.
+
+If you want, I can also:
+✔ make it more “fancy GitHub style” with badges
+✔ add architecture diagram
+✔ or write a shorter README version for recruiters
